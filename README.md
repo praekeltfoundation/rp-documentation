@@ -1,11 +1,11 @@
 Documentation for working with RapidPro
 =======================================
 
-At Praekelt.org we use self-hosted versions RapidPro to provide the messaging tooling of our Maternal Health programs. This documentation serves as a starting point for our team members in getting up to speed with running -- and developing with -- RapidPro.
+At Praekelt.org we use self-hosted versions RapidPro to provide the messaging tooling of our Maternal Health programs. This documentation serves as a starting point for our team members in getting up to speed with running — and developing with — RapidPro.
 
 ## Basics
 
-In our hosting environments we run RapidPro in Docker containers. The RapidPro community -- with Nyaruka -- has added support for building Docker images of RapidPro via the [rapidpro-docker][rpd] repository.
+In our hosting environments we run RapidPro in Docker containers. The RapidPro community — with Nyaruka — has added support for building Docker images of RapidPro via the [rapidpro-docker][rpd] repository.
 
 We customise the images we run and so have [created a fork of the rapidpro-docker repo][rpd-fork] that we use to build our images.
 
