@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+
+  redis:
+    image: redis:alpine
+  postgresql:
+    image: mdillon/postgis:9.6
+    environment:
+      - POSTGRES_DB=rapidpro
+
+  rapidpro:
+    image: ${RAPIDPRO_IMAGE:-praekeltfoundation/rapidpro:latest}
+    ports:
+      - '8000:8000'
+    environment:
+      - DOMAIN_NAME=localhost
+      - ALLOWED_HOSTS=*
+      - TEMBA_HOST=localhost
+      - DJANGO_DEBUG="off"
+      - DATABASE_URL=postgresql://postgres:postgres@postgresql/rapidpro
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY={$RAPIDPRO_SECRET_KEY:-super-secret-key}
+      - MANAGEPY_COLLECTSTATIC="on"
+      - MANAGEPY_COMPRESS="on"
+      - MANAGEPY_INIT_DB="on"
+      - MANAGEPY_MIGRATE="on"
+    depends_on:
+      - redis
+      - postgresql
+
+  celery:
+    image: ${RAPIDPRO_IMAGE:-praekeltfoundation/rapidpro:latest}
+    depends_on:
+      - rapidpro
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgresql/rapidpro
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY={$RAPIDPRO_SECRET_KEY:-super-secret-key}
+    links:
+      - redis
+      - postgresql
+    command: ["/venv/bin/celery", "--beat", "--app=temba", "worker", "--loglevel=INFO", "--queues=celery,msgs,flows,handler"]
+
