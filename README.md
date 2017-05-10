@@ -7,7 +7,13 @@ At Praekelt.org we use self-hosted versions RapidPro to provide the messaging to
 
 In our hosting environments we run RapidPro in Docker containers. The RapidPro community — with Nyaruka — has added support for building Docker images of RapidPro via the [rapidpro-docker][rpd] repository.
 
-We customise the images we run and so have [created a fork of the rapidpro-docker repo][rpd-fork] that we use to build our images.
+We build our own images of RapidPro that we run in production and QA, so have [created a fork of the rapidpro-docker repo][rpd-fork] that our images are built from.
+
+There are a few reasons we use our fork to build our own images:
+
+- To give us full control of the RapidPro Django settings file
+- To allow us to add or change what is configured via environment variables without effecting upstream users
+- To allow us to use our internal build and caching tools where needed
 
 ## Getting Started
 
