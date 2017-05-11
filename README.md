@@ -33,7 +33,7 @@ The `docker-compose.yml` compose file provides two containers: the RapidPro web 
 
 By default this compose file will pull the latest image from `praekeltfoundation/rapidpro` Docker Hub repo but this can be overridden by setting the image name in the `RAPIDPRO_IMAGE` envvar.
 
-Note: If you are having troubling getting the containers network access to the PostgreSQL and Redis servers running on the host, you can bind an IP address as an alias to localhost and make sure that both PostgreSQL and Redis accept connections on that address (or all addresses).
+**Note**: If you are having troubling getting the containers network access to the PostgreSQL and Redis servers running on the host, you can bind an IP address as an alias to localhost and make sure that both PostgreSQL and Redis accept connections on that address (or all addresses).
 
 On a Mac:
 
@@ -50,11 +50,15 @@ Steps:
     export RAPIDPRO_REDIS_URL="redis://10.200.10.1:6379/0"
     ```
 
+    **Note**: The RapidPro containers expect the Postgres database specified above to already exist.
+
 2. Start the containers:
 
     ```bash
     docker-compose up
     ```
+
+    **Note**: The RapidPro server container will by default — due to the `MANAGEPY_MIGRATE` envvar being set to "on" — run the Django migrate command on every startup. This means that the database tables will be initialised if they don't already exist on the first run of the container or migrations will be run if running a newer version the container.
 
 3. Browse to `http://localhost:8000` to access the RapidPro UI and setup the first Organisation
 
